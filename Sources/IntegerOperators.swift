@@ -116,10 +116,18 @@ public func <- <T: UnsignedInteger>(left: inout T!, right: Map) {
 
 /// Convert any value to `SignedInteger`.
 private func toSignedInteger<T: SignedInteger>(_ value: Any?) -> T? {
-	guard
-		let value = value,
-		case let number as NSNumber = value
-	else {
+	guard let value = value else {
+		return nil
+	}
+	
+	var numberPr: NSNumber?
+	if case let v as NSNumber = value {
+		numberPr = v
+	} else if case let v as String = value {
+		numberPr = Int(v) as NSNumber?
+	}
+	
+	guard let number = numberPr else {
 		return nil
 	}
 
@@ -144,10 +152,18 @@ private func toSignedInteger<T: SignedInteger>(_ value: Any?) -> T? {
 
 /// Convert any value to `UnsignedInteger`.
 private func toUnsignedInteger<T: UnsignedInteger>(_ value: Any?) -> T? {
-	guard
-		let value = value,
-		case let number as NSNumber = value
-	else {
+	guard let value = value else {
+		return nil
+	}
+	
+	var numberPr: NSNumber?
+	if case let v as NSNumber = value {
+		numberPr = v
+	} else if case let v as String = value {
+		numberPr = UInt(v) as NSNumber?
+	}
+	
+	guard let number = numberPr else {
 		return nil
 	}
 
